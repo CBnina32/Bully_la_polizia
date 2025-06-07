@@ -10,7 +10,7 @@ body {
 }
 
 .chat-container {
-    background: white;
+    background: gray;
     width: 380px;
     border-radius: 15px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -32,7 +32,7 @@ h2 {
 
 #chat-window {
     padding: 20px;
-    height: 350px;
+    height: 100px;
     overflow-y: auto;
     background-color: #f9fbff;
     font-size: 1rem;
