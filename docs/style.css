@@ -1,6 +1,7 @@
+/* style.css - dizajn modern, minimalist */
 body {
-    font-family: Arial, sans-serif;
-    background: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,61 +11,67 @@ body {
 
 .chat-container {
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    width: 400px;
-    max-width: 90%;
-    padding: 20px;
+    width: 380px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 h2 {
+    background: #4a90e2;
+    color: white;
+    margin: 0;
+    padding: 20px;
+    font-weight: 600;
     text-align: center;
-    color: #333;
-    margin-bottom: 15px;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
 }
 
 #chat-window {
-    height: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    padding: 20px;
+    height: 350px;
     overflow-y: auto;
-    background-color: #fafafa;
-    margin-bottom: 15px;
+    background-color: #f9fbff;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
 }
 
 #chat-window p {
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
-strong {
-    color: #0d6efd;
+#chat-window p strong {
+    color: #4a90e2;
 }
 
 .input-group {
     display: flex;
+    border-top: 1px solid #e0e6f8;
+    background: white;
 }
 
 input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    flex: 1;
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #0d6efd;
-    color: white;
+    background: #4a90e2;
     border: none;
-    border-radius: 5px;
-    margin-left: 10px;
+    color: white;
+    padding: 0 25px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s ease;
 }
 
 button:hover {
-    background-color: #0b5ed7;
+    background: #357ABD;
 }
