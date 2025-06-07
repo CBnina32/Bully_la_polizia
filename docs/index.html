@@ -276,164 +276,148 @@
 </style>
 
 <script>
-  function chat() {
-    const input = document.getElementById("userInput").value;
-    const chatWindow = document.getElementById("chat-window");
-    const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
-    chatWindow.innerHTML += userMessage;
-
-    const msg = input.toLowerCase();
+function chat() {
+  const input = document.getElementById("userInput").value.toLowerCase();
+  const chatWindow = document.getElementById("chat-window");
+  const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
+  chatWindow.innerHTML += userMessage;
 
 const keywords = {
-  // Përshëndetje dhe kontakt fillestar
- pershendetje: [
-  "pershendetje", "përshëndetje", "hello", "hi", "miredita", "mirëdita", "hey", "hej",
-  "tung", "selam", "selam alejkum", "ciao", "çkemi", "ç'kemi", "hajde", "yo", "heyyy", "hej o", 
-  "heyyo", "allo", "hej selam", "hej tung", "mirëmëngjes", "mirë mëngjesi", "mirëmbrëma",
-  "dita e mirë", "hej shok", "hej mik", "o", "o ti", "a je aty", "si je", "si ia ke",
-  "si po shkon", "si jeni", "gëzuar ditën", "mirë se erdhe"
-],
+  pershendetje: [
+    "pershendetje", "përshëndetje", "hello", "hi", "miredita", "mirëdita", "hej", "tung",
+    "ciao", "çkemi", "ç'kemi", "hajde", "yo", "heyyy", "hej o", "heyyo", "allo",
+    "mirëmëngjes", "mirë mëngjesi", "mirëmbrëma", "dita e mirë", "hej shok", "hej mik",
+    "si je", "si po shkon", "si jeni", "gëzuar ditën", "mirë se erdhe"
+  ],
 
+  ndihme: [
+    "ndihme", "ndihmë", "kam nevoje", "kam nevojë", "kam nevoj", "nuk mundem", "s'mundem",
+    "me ndihmo", "më ndihmo", "më ndihmon dot", "me jep ndihme", "me jep ndihmë",
+    "jam ne rrezik", "sos", "panic", "alarm", "ndihmë ju lutem", "më ndihmoni",
+    "dua ndihmë", "dua të flas me dike", "dua të flas", "jam keq", "nuk di çfarë të bëj",
+    "nuk po ja dal", "më ndihmo dikush", "nuk mund ta përballoj vetë", "më duhet ndihmë",
+    "ndihmë urgjente", "më duhet ndihmë tani", "kam frikë", "nuk jam mirë",
+    "nuk më dëgjon askush", "nuk ka kush më ndihmon", "si të veproj", "çfarë të bëj"
+  ],
 
-  // Kërkesë për ndihmë ose mbështetje
-ndihme: [
-  "ndihme", "ndihmë", "kam nevoje", "kam nevojë", "kam nevoj", "nuk mundem", "s'mundem",
-  "me ndihmo", "me ndihmon", "më ndihmo", "më ndihmon dot", "me jep ndihme", "me jep ndihmë",
-  "jam ne rrezik", "ndihmom", "sos", "panic", "alarm", "ndihmë ju lutem", "më ndihmoni",
-  "dua ndihmë", "dua të flas me dike", "dua të flas", "jam keq", "nuk di çfarë të bëj",
-  "nuk di çka me ba", "nuk po ja dal", "nuk po e përballoj", "më ndihmo dikush", 
-  "nuk mund ta përballoj vetë", "më duhet ndihmë", "ndihmë urgjente", "më duhet ndihmë tani",
-  "nuk ndjehem mirë", "kam nevojë për ndihmë psikologjike", "kam frikë", "nuk jam mirë",
-  "nuk më dëgjon askush", "nuk ka kush më ndihmon", "si të veproj", "çfarë të bëj"
-],
+  bullizem: [
+    "bullizem", "bullizëm", "ngacmim", "ngacmime", "sharje", "fyerje", "ofendim", "ofendime",
+    "kërcënime", "kërcënim", "tall", "përqeshje", "perqeshje", "poshtërim", "poshtrim",
+    "urrejne", "gjuhë urrejtje", "urrejtje", "komente negative",
+    "postime fyese", "video poshtëruese", "video fyese", "meme fyese", "cyberbullizëm",
+    "cyberbullying", "ngacmim online", "ngacmime në rrjete", "abuzim online",
+    "abuzim psikologjik", "më bullizojnë", "më ngacmojnë", "më fyejnë", "më ofendojnë",
+    "më tallin", "më kërcënojnë", "më bëjnë meme", "më marrin nëpër gojë", "fyej",
+    "më qeshin", "më shajnë", "më shtyjnë", "më perqeshin", "më godasin", "më injorojnë",
+    "s'më lënë rehat", "nuk më lënë të qetë", "në klasë më tallin", "në shkollë më shajnë",
+    "jam viktimë bullizmi", "po më përndjekin", "më bëjnë presion", "më trajtojnë keq",
+    "tallen me mua", "qeshin me mua", "më thërrasin me nofka", "nofka fyese",
+    "më turpërojnë publikisht"
+  ],
 
-  // Bullizëm dhe abuzim online
-bullizem: [
-  "bullizem", "bullizëm", "ngacmim", "ngacmime", "sharje", "fyerje", "ofendim", "ofendime",
-  "kërcënime", "kërcënim", "talje", "përqeshje", "perqeshje", "poshtërim", "poshtrim",
-  "gjuhë urrejtjeje", "gjuhë urrejtje", "urrejtje", "urrejtës", "komente negative",
-  "postime fyese", "video poshtëruese", "video fyese", "meme fyese", "cyberbullizëm", "cyberbullying",
-  "ngacmim online", "ngacmime në rrjete", "abuzim online", "abuzim psikologjik",
-  "më bullizojnë", "më ngacmojnë", "më fyejnë", "më ofendojnë", "më tallin", "më kërcënojnë",
-  "më bëjnë meme", "më marrin nëpër gojë", "më qeshin", "më shajnë", "më shtyjnë",
-  "më perqeshin", "më përqeshin", "më godasin", "më injorojnë", "s'më lënë rehat",
-  "nuk më lënë të qetë", "në klasë më tallin", "në shkollë më shajnë", "jam viktimë bullizmi",
-  "po më përndjekin", "më bëjnë presion", "më trajtojnë keq", "më ulin para të tjerëve",
-  "tallen me mua", "qeshin me mua", "më thërrasin me nofka", "nofka fyese", "më turpërojnë publikisht"
-],
+  falenderim: [
+    "faleminderit", "flm", "ju faleminderit", "faleminderit shumë", "ju lumtë",
+    "mirënjohje", "respekt", "falenderoj", "shumë faleminderit", "faleminderit për ndihmën",
+    "ju falënderoj", "thank you", "thanks", "many thanks", "appreciate it", "jeni të mirë",
+    "mirënjohje e thellë", "shumë mirënjohje", "ju falënderoj shumë", "respekt për ju",
+    "ju vlerësoj", "faleminderit për gjithçka", "faleminderit për suportin", "faleminderit për kujdesin"
+  ],
 
+  vetmi: [
+    "vetem", "vetmuar", "jam keq", "nuk më kupton askush", "asnjë nuk më kupton",
+    "s'kam shokë", "ndihem bosh", "nuk më do askush", "jam i lënë pas dore",
+    "jam në depresion", "jam i padukshëm", "nuk kam me kë të flas", "ndjehem i pashpresë",
+    "jam i izoluar", "jam i harruar", "nuk më dëgjon askush", "ndihem i pafuqishëm",
+    "jam i vetmuar në botë", "më mungon dikush", "nuk kam mik", "jam i shqetësuar dhe vetëm",
+    "ndihem i braktisur", "më dhemb zemra", "nuk gjej paqe", "jam i humbur", "kam nevojë për shoqëri"
+  ],
 
- falenderim: [
-  "faleminderit", "flm", "ju faleminderit", "faleminderit shumë", "ju lumtë", "mirënjohje", 
-  "respekt", "falenderoj", "shumë faleminderit", "faleminderit për ndihmën", "ju falënderoj", 
-  "thank you", "thanks", "many thanks", "appreciate it", "i appreciate it", "jeni të mirë",
-  "mirënjohje e thellë", "shumë mirënjohje", "ju falënderoj shumë", "respekt për ju", "ju vlerësoj",
-  "faleminderit për gjithçka", "faleminderit për suportin", "faleminderit për kujdesin"
-],
+  ankth: [
+    "ankth", "stres", "nervoz", "kam frikë", "nuk fle dot", "më merret fryma",
+    "jam i tensionuar", "mendoj shumë", "trishtim i vazhdueshëm", "panik",
+    "ndihem i shqetësuar", "zemra më rreh shpejt", "jam i shqetësuar", "nuk kam qetësi",
+    "kam sulme paniku", "jam i trembur", "kam ndjenja të këqija", "nuk di si të qetësohem",
+    "më dridhet trupi", "kam ndjenja frike", "nuk di çfarë do të ndodhë",
+    "jam i stresuar", "kam presion në gjoks", "nuk gjej qetësi"
+  ],
 
+  vetebesim: [
+    "nuk besoj te vetja", "jam i pavlerë", "nuk vlej", "s'jam i mirë mjaftueshëm",
+    "nuk më pëlqen vetja", "nuk kam aftësi", "nuk mund të bëj asgjë", "dështuar",
+    "jam i pamjaftueshëm", "jam i pafuqishëm", "nuk kam vlera", "pafat",
+    "jam i dobët", "kam frikë të provoj", "jam i pasigurt", "ndjehem i pavlerë",
+    "jam i pambështetur", "kam mungesë besimi", "nuk di të marr vendime",
+    "jam i pasuksesshëm", "ndjehem i panevojshëm"
+  ],
 
-  // Vetmi dhe ndjenja të ulëta emocionale
-vetmi: [
-  "vetem", "i vetmuar", "e vetmuar", "jam keq", "jam i mërzitur", "nuk më kupton askush", "asnjë nuk më kupton",
-  "s'kam shokë", "ndihem bosh", "nuk më do askush", "jam i lënë pas dore", "jam në depresion", "jam i padukshëm",
-  "nuk kam me kë të flas", "ndjehem i pashpresë", "jam i izoluar", "jam i harruar", "nuk më dëgjon askush",
-  "ndihem i pafuqishëm", "jam i vetmuar në botë", "më mungon dikush", "nuk kam mik", "jam i shqetësuar dhe vetëm",
-  "ndihem i braktisur", "më dhemb zemra", "nuk gjej paqe", "jam i humbur", "kam nevojë për shoqëri"
-],
+  rreziqe: [
+    "foto", "më kërkuan foto", "dikush më dërgoi foto të papërshtatshme", "më dërgojnë mesazhe të çuditshme",
+    "dikush më shantazhon", "më kërcënon me publikim fotosh", "më bëjnë presion",
+    "më kanë vjedhur llogarinë", "më kanë hakuar", "kërcënim online", "ngacmim seksual",
+    "shantazh", "rrezik në internet", "ndërhyrje në privatësi", "kërcënime anonime",
+    "kërcënime në rrjete sociale", "masazhe të paautorizuara", "spam i padëshiruar",
+    "phishing", "hakerim", "ndjekje online", "profil i rremë", "lidhje të rrezikshme",
+    "abuzim seksual online", "mashtrime në internet", "nxitje për vetëvrasje",
+    "informacione private të ekspozuara", "përndjekje në internet", "kërcënime fizike",
+    "kërcënime me vdekje"
+  ],
 
-
-  // Ankth dhe stres
-ankth: [
-  "kam ankth", "stres", "nervoz", "kam frikë", "nuk fle dot", "më merret fryma", 
-  "jam i tensionuar", "mendoj shumë", "trishtim i vazhdueshëm", "panik", "ndihem i shqetësuar",
-  "zemra më rreh shpejt", "jam i shqetësuar", "nuk kam qetësi", "kam sulme paniku",
-  "jam i trembur", "kam ndjenja të këqija", "nuk di si të qetësohem",
-  "më dridhet trupi", "kam ndjenja frike", "nuk di çfarë do të ndodhë",
-  "jam i stresuar", "kam presion në gjoks", "nuk gjej qetësi"
-],
-
-
-  // Vetëbesim i ulët dhe vetëvlerësim
-vetebesim: [
-  "nuk besoj te vetja", "jam i pavlerë", "nuk vlej", "s'jam i/e mirë mjaftueshëm", 
-  "nuk më pëlqen vetja", "nuk kam aftësi", "nuk mund të bëj asgjë", "jam i dështuar",
-  "jam i pamjaftueshëm", "jam i pafuqishëm", "nuk kam vlera", "jam i pafat",
-  "jam i dobët", "kam frikë të provoj", "jam i pasigurt", "ndjehem i pavlerë",
-  "jam i pambështetur", "kam mungesë besimi", "nuk di të marr vendime",
-  "jam i pasuksesshëm", "ndjehem i panevojshëm"
-],
-
-
-  // Rreziqe online (rreth privatësisë dhe sigurisë)
-rreziqe: [
-  "më kërkuan foto", "dikush më dërgoi foto të papërshtatshme", "më dërgojnë mesazhe të çuditshme",
-  "dikush më shantazhon", "më kërcënon me publikim fotosh", "më bëjnë presion", 
-  "më kanë vjedhur llogarinë", "më kanë hakuar", "kërcënim online", "ngacmim seksual", 
-  "shantazh", "rrezik në internet", "ndërhyrje në privatësi", "kërcënime anonime",
-  "kërcënime në rrjete sociale", "masazhe të paautorizuara", "spam i padëshiruar",
-  "phishing", "hakerim", "ndjekje online", "profil i rremë", "lidhje të rrezikshme",
-  "abuzim seksual online", "mashtrime në internet", "nxitje për vetëvrasje",
-  "informacione private të ekspozuara", "përndjekje në internet", "kërcënime fizike",
-  "kërcënime me vdekje"
-],
-
-
-  // Vetëlëndim ose mendime të rënda
-vetelendim: [
-  "dua të lëndoj veten", "dua te lëndoj veten", "dua të lëndoj veten", "dua të lendoj veten", 
-  "jam lodhur", "nuk dua të jetoj", "mendoj për vetëvrasje", "mendoj per vetevrasje", "nuk ja vlej",
-  "s'ka më shpresë", "ska me shprese", "jam bosh", "jeta s'ka kuptim", "jeta nuk ka kuptim",
-  "nuk ka kuptim", "jam në fund", "jam i dorëzuar", "jam dorëzuar", "jam dorzuar",
-  "dua të mbyll gjithçka", "nuk dua të ekzistoj", "nuk dua më", "nuk dua më të jetoj", 
-  "urrej veten", "urrej jetën", "jam një barrë", "s'jam i rëndësishëm", "sjam i rendesishem", 
-  "s’jam i nevojshëm", "askush s'do më", "nuk me do njeri", "ndihem bosh", "jam pa shpresë",
-
-  // Fjalë të shkurtra dhe të drejtpërdrejta
-  "vetevritem", "vetevrasje", "vars", "plagosem", "therem", "helm", "mbytes", 
-  "hidhem", "hidhem nga", "prerje", "ther veten", "lëndim", "do vdes", "dua te vdes", 
-  "dua me vdek", "jam gati me vdek", "jam gati me u vetëvra", "do i jap fund",
-
-  // Fjalë më të rralla por të mundshme
-  "fundi im", "jeta ime mbaroi", "nuk ka më rrugëdalje", "nuk dua të zgjohem", 
-  "do iki përgjithmonë", "dua të mbyll sytë përgjithmonë"
-]
-
+  vetelendim: [
+    "dua të lëndoj veten", "dua te lëndoj veten", "dua të lendoj veten",
+    "jam lodhur", "nuk dua të jetoj", "mendoj për vetëvrasje", "mendoj per vetevrasje",
+    "nuk ja vlej", "s'ka më shpresë", "ska me shprese", "jam bosh", "jeta s'ka kuptim",
+    "jeta nuk ka kuptim", "nuk ka kuptim", "jam në fund", "jam i dorëzuar",
+    "dua të mbyll gjithçka", "nuk dua të ekzistoj", "nuk dua më", "nuk dua më të jetoj",
+    "urrej veten", "urrej jetën", "jam një barrë", "s'jam i rëndësishëm",
+    "askush s'do më", "nuk më do njeri", "ndihem i pashpresë", "kam dëshirë të vdes",
+    "dua të më ndihmojnë për të mos jetuar më","vras veten","dua te vdes","jap fund jetes"
+  ]
 };
 
 
   let response = "Na vjen mirë që po na shkruan. Si mund të të ndihmojmë?";
 
-for (let tema in keywords) {
-  if (keywords[tema].some(fjale => msg.toLowerCase().includes(fjale))) {
-    if (tema === "ndihme") {
-      response = "Kërko ndihmë nga një i rritur ose psikolog. Nuk je vetëm.";
-    } else if (tema === "bullizem") {
-      response = "Raporto bullizmin dhe ruaj provat. Mos e përballo vetëm.";
-    } else if (tema === "falenderim") {
-      response = "Faleminderit! Ne jemi këtu për të ndihmuar.";
-    } else if (tema === "vetmi") {
-      response = "Mos harro se ka njerëz që të duan dhe kujdesen për ty. Foli dikujt të besuar.";
-    } else if (tema === "pershendetje") {
-      response = "Përshëndetje! Si mund të të ndihmojmë?";
-    } else if (tema === "ankth") {
-      response = "Ankthi është i vështirë, por jo i pamundur për t'u përballuar. Merr frymë thellë dhe kërko mbështetje.";
-    } else if (tema === "vetebesim") {
-      response = "Ti vlen shumë më shumë sesa mendon. Mos u krahaso me të tjerët, je i/e veçantë.";
-    } else if (tema === "rreziqe") {
-      response = "Mos ndaj informacion personal dhe njofto një të rritur nëse ndihesh i rrezikuar. Siguria jote është prioritet.";
-    } else if (tema === "vetelendim") {
-      response = "Nuk je vetëm. Të lutem fol me dikë të besuar menjëherë. Jeta jote ka vlerë.";
+  for (const tema in keywords) {
+    if (keywords[tema].some(fjala => input.includes(fjala))) {
+      switch(tema) {
+        case "ndihme":
+          response = "Kërko ndihmë nga një i rritur ose psikolog. Nuk je vetëm.";
+          break;
+        case "bullizem":
+          response = "Raporto bullizmin dhe ruaj provat. Mos e përballo vetëm.";
+          break;
+        case "falenderim":
+          response = "Faleminderit! Ne jemi këtu për të ndihmuar.";
+          break;
+        case "vetmi":
+          response = "Mos harro se ka njerëz që të duan dhe kujdesen për ty. Foli dikujt të besuar.";
+          break;
+        case "pershendetje":
+          response = "Përshëndetje! Si mund të të ndihmojmë?";
+          break;
+        case "ankth":
+          response = "Ankthi është i vështirë, por mund të përballohet. Merr frymë thellë dhe kërko mbështetje.";
+          break;
+        case "vetebesim":
+          response = "Ti vlen shumë më shumë sesa mendon. Mos u krahaso me të tjerët, je i veçantë.";
+          break;
+        case "rreziqe":
+          response = "Mos ndaj informacione personale dhe njofto një të rritur nëse ndihesh i rrezikuar.";
+          break;
+        case "vetelendim":
+          response = "Nuk je vetëm. Të lutem fol me dikë të besuar menjëherë. Jeta jote ka vlerë.";
+          break;
+      }
+      break;
     }
-    break;
   }
+
+  chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
+  document.getElementById("userInput").value = "";
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
-
-
-    chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
-    document.getElementById("userInput").value = "";
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-  }
 </script>
+
 
 
     <footer>
