@@ -219,10 +219,11 @@
 
         // Fjalë kyçe të zgjeruara për tema të ndryshme
         const keywords = {
+            pershendetje:["Pershendetje","hello","miredita",'MIREMENGJES","hi","si kalove","hey"],
             ndihme: ["ndihme", "ndimo", "mbeshtetje", "mbeshtet", "kam nevoje", "s'mundem", "sjam mire"],
-            bullizem: ["bullizem", "ngacmim", "kano", "fyej", "tallje", "dhunë", "sharje"],
+            bullizem: ["bullizem", "ngacmim", "kano", "fyej", "tallje", "dhunë", "sharje","tall","shaj"],
             falenderim: ["faleminderit", "flm", "falenderoj", "respekt", "ju lumtë"],
-            vetmi: ["vetem", "i vetmuar", "askush", "s'me kupton", "jam keq"]
+            vetmi: ["vetem", "i vetmuar", "askush", "s'me kupton", "jam keq","asnje"]
         };
 
         let response = "Faleminderit që ndave këtë. Mund të na tregosh më shumë, jemi këtu për ty.";
@@ -238,6 +239,9 @@
                     response = "Faleminderit për fjalët e mira! Ne jemi gjithmonë këtu për ty.";
                 } else if (tema === "vetmi") {
                     response = "Nuk je vetëm. Ka shumë njerëz që kujdesen për ty – provo të flasësh me një mik, familjar ose mësues.";
+                }
+                else if (tema === "pershendetje") {
+                    response = "Pershendetje, shpresoj te jesh mire. Si mund te te ndihmoj.";
                 }
                 break;
             }
