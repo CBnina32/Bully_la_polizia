@@ -208,31 +208,47 @@
         <button onclick="chat()">Dërgo</button>
     </div>
 
-    <script>
-        function chat() {
-            const input = document.getElementById("userInput").value;
-            const chatWindow = document.getElementById("chat-window");
-            const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
-            chatWindow.innerHTML += userMessage;
+<script>
+    function chat() {
+        const input = document.getElementById("userInput").value;
+        const chatWindow = document.getElementById("chat-window");
+        const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
+        chatWindow.innerHTML += userMessage;
 
-            let response = "";
-            const msg = input.toLowerCase();
+        const msg = input.toLowerCase();
 
-            if (msg.includes("ndihme") || msg.includes("mbështetje")) {
-                response = "Na vjen keq që po kalon këtë. Mund të flasësh me një psikolog, mësues ose të kontaktosh një organizatë për ndihmë profesionale.";
-            } else if (msg.includes("bullizem") || msg.includes("ngacmim")) {
-                response = "Bullizmi është një sjellje e papranueshme. Është e rëndësishme të flasësh me dikë që i beson dhe të raportosh ngjarjen.";
-            } else if (msg.includes("faleminderit")) {
-                response = "Gjithmonë në shërbimin tënd. Qëndro i/e fortë!";
-            } else {
-                response = "Faleminderit për mesazhin. Po përpiqemi të të ndihmojmë. Provo të përfshish fjalë si 'ndihmë' ose 'bullizëm'.";
+        // Fjalë kyçe të zgjeruara për tema të ndryshme
+        const keywords = {
+            ndihme: ["ndihme", "ndimo", "mbeshtetje", "mbeshtet", "kam nevoje", "s'mundem", "sjam mire"],
+            bullizem: ["bullizem", "ngacmim", "kano", "fyej", "tallje", "dhunë", "sharje"],
+            falenderim: ["faleminderit", "flm", "falenderoj", "respekt", "ju lumtë"],
+            vetmi: ["vetem", "i vetmuar", "askush", "s'me kupton", "jam keq"]
+        };
+
+        let response = "Faleminderit që ndave këtë. Mund të na tregosh më shumë, jemi këtu për ty.";
+
+        // Kontrollo nëse mesazhi përmban ndonjë nga fjalët kyçe
+        for (let tema in keywords) {
+            if (keywords[tema].some(fjale => msg.includes(fjale))) {
+                if (tema === "ndihme") {
+                    response = "Na vjen keq që ndihesh kështu. Është shumë e rëndësishme të kërkosh ndihmë. Mund të flasësh me një psikolog ose të kontaktosh një linjë ndihme.";
+                } else if (tema === "bullizem") {
+                    response = "Bullizmi është serioz. Të këshilloj të flasësh me dikë që i beson dhe të mos e mbash për vete.";
+                } else if (tema === "falenderim") {
+                    response = "Faleminderit për fjalët e mira! Ne jemi gjithmonë këtu për ty.";
+                } else if (tema === "vetmi") {
+                    response = "Nuk je vetëm. Ka shumë njerëz që kujdesen për ty – provo të flasësh me një mik, familjar ose mësues.";
+                }
+                break;
             }
-
-            chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
-            document.getElementById("userInput").value = "";
-            chatWindow.scrollTop = chatWindow.scrollHeight;
         }
-    </script>
+
+        chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
+        document.getElementById("userInput").value = "";
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+</script>
+
 
     <footer>
         <p>&copy; 2025 Ndihmë Kundër Bullizmit Kibernetik. Të gjitha të drejtat e rezervuara.</p>
