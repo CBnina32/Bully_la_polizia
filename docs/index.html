@@ -195,56 +195,126 @@
         </section>
     </main>
 
-    <div id="chatbot">
-        <h3>Bisedo me Ndihmësin</h3>
-        <div id="chat-window"></div>
-        <input type="text" id="userInput" placeholder="Shkruani një pyetje...">
-        <button onclick="chat()">Dërgo</button>
-    </div>
+<!-- Chatbot i vogël në këndin e djathtë poshtë -->
+<div id="chatbot">
+  <h3>Ndihmë</h3>
+  <div id="chat-window"></div>
+  <input type="text" id="userInput" placeholder="Shkruaj...">
+  <button onclick="chat()">➤</button>
+</div>
+
+<style>
+  #chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+    height: 320px;
+    background-color: #ffffff;
+    border: 2px solid #004aad;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+  }
+
+  #chatbot h3 {
+    margin: 0 0 8px;
+    color: #004aad;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  #chat-window {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    margin-bottom: 6px;
+    background: #f9f9f9;
+    max-height: 160px;
+    font-size: 0.85rem;
+  }
+
+  #chat-window p {
+    margin: 4px 0;
+  }
+
+  #userInput {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  #chatbot button {
+    align-self: flex-end;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  #chatbot button:hover {
+    background-color: #00357c;
+  }
+
+  @media screen and (max-width: 500px) {
+    #chatbot {
+      width: 90%;
+      right: 5%;
+    }
+  }
+</style>
 
 <script>
-    function chat() {
-        const input = document.getElementById("userInput").value;
-        const chatWindow = document.getElementById("chat-window");
-        const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
-        chatWindow.innerHTML += userMessage;
+  function chat() {
+    const input = document.getElementById("userInput").value;
+    const chatWindow = document.getElementById("chat-window");
+    const userMessage = `<p><strong>Ti:</strong> ${input}</p>`;
+    chatWindow.innerHTML += userMessage;
 
-        const msg = input.toLowerCase();
+    const msg = input.toLowerCase();
 
-        // Fjalë kyçe të zgjeruara për tema të ndryshme
-        const keywords = {
-            pershendetje:["Pershendetje","hello","miredita","MIREMENGJES","hi","si kalove","hey"],
-            ndihme: ["ndihme", "ndimo", "mbeshtetje", "mbeshtet", "kam nevoje", "s'mundem", "sjam mire"],
-            bullizem: ["bullizem", "ngacmim", "kano", "fyej", "tallje", "dhunë", "sharje","tall","shaj"],
-            falenderim: ["faleminderit", "flm", "falenderoj", "respekt", "ju lumtë"],
-            vetmi: ["vetem", "i vetmuar", "askush", "s'me kupton", "jam keq","asnje"]
-        };
+    const keywords = {
+      pershendetje: ["pershendetje", "hello", "hi", "miredita", "hey"],
+      ndihme: ["ndihme", "kam nevoje", "s'mundem"],
+      bullizem: ["bullizem", "ngacmim", "fyerje", "sharje"],
+      falenderim: ["faleminderit", "flm", "ju lumtë"],
+      vetmi: ["vetem", "jam keq", "i vetmuar"]
+    };
 
-        let response = "Faleminderit që ndave këtë. Mund të na tregosh më shumë, jemi këtu për ty.";
+    let response = "Na vjen mirë që po na shkruan. Si mund të të ndihmojmë?";
 
-        // Kontrollo nëse mesazhi përmban ndonjë nga fjalët kyçe
-        for (let tema in keywords) {
-            if (keywords[tema].some(fjale => msg.includes(fjale))) {
-                if (tema === "ndihme") {
-                    response = "Na vjen keq që ndihesh kështu. Është shumë e rëndësishme të kërkosh ndihmë. Mund të flasësh me një psikolog ose të kontaktosh një linjë ndihme.";
-                } else if (tema === "bullizem") {
-                    response = "Bullizmi është serioz. Të këshilloj të flasësh me dikë që i beson dhe të mos e mbash për vete.";
-                } else if (tema === "falenderim") {
-                    response = "Faleminderit për fjalët e mira! Ne jemi gjithmonë këtu për ty.";
-                } else if (tema === "vetmi") {
-                    response = "Nuk je vetëm. Ka shumë njerëz që kujdesen për ty – provo të flasësh me një mik, familjar ose mësues.";
-                }
-                else if (tema === "pershendetje") {
-                    response = "Pershendetje, shpresoj te jesh mire. Si mund te te ndihmoj.";
-                }
-                break;
-            }
+    for (let tema in keywords) {
+      if (keywords[tema].some(fjale => msg.includes(fjale))) {
+        if (tema === "ndihme") {
+          response = "Kërko ndihmë nga një i rritur ose psikolog. Nuk je vetëm.";
+        } else if (tema === "bullizem") {
+          response = "Raporto bullizmin dhe ruaj provat. Mos e përballo vetëm.";
+        } else if (tema === "falenderim") {
+          response = "Faleminderit! Ne jemi këtu për të ndihmuar.";
+        } else if (tema === "vetmi") {
+          response = "Mos harro se ka njerëz që të duan dhe kujdesen për ty.";
+        } else if (tema === "pershendetje") {
+          response = "Përshëndetje! Si mund të të ndihmojmë?";
         }
-
-        chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
-        document.getElementById("userInput").value = "";
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        break;
+      }
     }
+
+    chatWindow.innerHTML += `<p><strong>Ndihmësi:</strong> ${response}</p>`;
+    document.getElementById("userInput").value = "";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
 </script>
 
 
